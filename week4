@@ -1,0 +1,39 @@
+
+import java.sql.*;
+
+public class CRUDDemo {
+
+    public static void main(String args[]) throws Exception {
+
+        Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/testdb",
+                "root",
+                "password");
+
+        Statement st = con.createStatement();
+
+        // INSERT
+        st.executeUpdate(
+                "INSERT INTO employee VALUES(101,'Ram',25000)");
+
+        // READ
+        ResultSet rs = st.executeQuery("SELECT * FROM employee");
+
+        while (rs.next()) {
+            System.out.println(
+                    rs.getInt(1) + " "
+                    + rs.getString(2) + " "
+                    + rs.getInt(3));
+        }
+
+        // UPDATE
+        st.executeUpdate(
+                "UPDATE employee SET salary=30000 WHERE id=101");
+
+        // DELETE
+        st.executeUpdate(
+                "DELETE FROM employee WHERE id=101");
+
+        con.close();
+    }
+}
